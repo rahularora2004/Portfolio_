@@ -192,7 +192,7 @@
             <!-- Photo -->
             <div class="lg:w-1/2 flex justify-center">
                 <div class="w-72 h-72 md:w-80 md:h-80 rounded-full bg-gray-800 border-4 border-indigo-500/50 shadow-2xl shadow-indigo-600/20 p-2">
-                    <img src="https://i.ibb.co/ynSy2rZq/Professional-Pic.jpg" 
+                    <img src="https://i.ibb.co/ynSy2rZ/Professional-Pic.jpg" 
                          alt="A photo of Rahul Arora" 
                          class="w-full h-full rounded-full object-cover"
                          onerror="this.onerror=null;this.src='https://placehold.co/400x400/0a0a0a/e5e7eb?text=Photo+Not+Found';">
@@ -585,60 +585,61 @@
             const chatWindow = document.getElementById('chat-window');
             const chatInput = document.getElementById('chat-input');
             const sendButton = document.getElementById('send-button');
-            let chatHistory = [];
+            
+            const portfolioContext = `
+                You are a professional career assistant for Rahul Arora. Your goal is to answer questions about his profile accurately and concisely based on the following information. Do not make up information.
+                
+                **Name:** Rahul Arora
+                **Role:** Computer Science graduate with a passion for Law and Management.
+                **Education:**
+                - B.Sc. (Honours) Computer Science from Delhi University with 9.45 CGPA.
+                - Schooling from Mother's Global School with 93.6% in Std. 12 and 94.4% in Std. 10.
+                **Experience:**
+                - Intern at Delhi University (Vice Chancellor Internship Scheme).
+                - Campus Ambassador at MyGov India.
+                - Multiple roles at Vagmita Debsoc including Member and Executive.
+                - Multiple roles at BLITZ, The Computer Science Society, including Secretary and Executive.
+                - Leadership roles at Mother's Global School including Head Boy, Secretary General (MGMUN), and House Captain.
+                - President and Vice President of the Interact Club.
+                **Publications:**
+                - "DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System" in ETASR.
+                - "Navigating the Landscape of Text-based Gen-AI" in IOSR-JCE.
+                **Certifications:**
+                - Copyright Law (University of Pennsylvania)
+                - Introduction to Intellectual Property (University of Pennsylvania)
+                - Google Digital Marketing Certificate
+                **Volunteering:**
+                - NEP SAARTHI at Keshav Mahavidyalaya.
+                - Campus Ambassador, Class Representative, and Speaker at various events.
+                **Technical Skills:**
+                - Python, C++, AI, ML, Data Analysis, Full-stack Web Development, App Development, NLP, SEO.
+                **Soft Skills:**
+                - Leadership, Team Management, Professional Communication, Problem Solving, Critical Thinking, Public Speaking, Creative Writing, Event Management.
+                **Achievements:**
+                - Winner of over 45 competitions in debating, public speaking, etc., with notable wins at Unacademy and IIM Ranchi events.
+                Now, please answer the user's questions.
+            `;
+
+            let chatHistory = [
+                { role: "user", parts: [{ text: portfolioContext }] },
+                { role: "model", parts: [{ text: "Understood. I'm ready to act as Rahul Arora's career assistant. How can I help?" }] }
+            ];
+
 
             const sendMessage = async () => {
                 const userInput = chatInput.value.trim();
                 if (userInput === '') return;
 
-                // Display user message
                 appendMessage(userInput, 'user');
                 chatInput.value = '';
-
-                // Show typing indicator
                 const typingIndicator = appendTypingIndicator();
 
-                // Construct the prompt for Gemini
-                const context = `
-                    You are a professional career assistant for Rahul Arora. Your goal is to answer questions about his profile accurately and concisely based on the following information. Do not make up information.
-                    
-                    **Name:** Rahul Arora
-                    **Role:** Computer Science graduate with a passion for Law and Management.
-                    **Education:**
-                    - B.Sc. (Honours) Computer Science from Delhi University with 9.45 CGPA.
-                    - Schooling from Mother's Global School with 93.6% in Std. 12 and 94.4% in Std. 10.
-                    **Experience:**
-                    - Intern at Delhi University (Vice Chancellor Internship Scheme).
-                    - Campus Ambassador at MyGov India.
-                    - Multiple roles at Vagmita Debsoc including Member and Executive.
-                    - Multiple roles at BLITZ, The Computer Science Society, including Secretary and Executive.
-                    - Leadership roles at Mother's Global School including Head Boy, Secretary General (MGMUN), and House Captain.
-                    - President and Vice President of the Interact Club.
-                    **Publications:**
-                    - "DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System" in ETASR.
-                    - "Navigating the Landscape of Text-based Gen-AI" in IOSR-JCE.
-                    **Certifications:**
-                    - Copyright Law (University of Pennsylvania)
-                    - Introduction to Intellectual Property (University of Pennsylvania)
-                    - Google Digital Marketing Certificate
-                    **Volunteering:**
-                    - NEP SAARTHI at Keshav Mahavidyalaya.
-                    - Campus Ambassador, Class Representative, and Speaker at various events.
-                    **Technical Skills:**
-                    - Python, C++, AI, ML, Data Analysis, Full-stack Web Development, App Development, NLP, SEO.
-                    **Soft Skills:**
-                    - Leadership, Team Management, Professional Communication, Problem Solving, Critical Thinking, Public Speaking, Creative Writing, Event Management.
-                    **Achievements:**
-                    - Winner of over 45 competitions in debating, public speaking, etc., with notable wins at Unacademy and IIM Ranchi events.
-                `;
-                
-                chatHistory.push({ role: "user", parts: [{ text: `Context: ${context}\n\nQuestion: ${userInput}` }] });
+                chatHistory.push({ role: "user", parts: [{ text: userInput }] });
 
                 try {
                     const responseText = await callGeminiWithExponentialBackoff(chatHistory);
                     chatHistory.push({ role: "model", parts: [{ text: responseText }] });
                     
-                    // Remove typing indicator and display assistant response
                     typingIndicator.remove();
                     appendMessage(responseText, 'assistant');
 
@@ -649,18 +650,17 @@
                 }
             };
             
-            // Function to call Gemini API with exponential backoff
-            const callGeminiWithExponentialBackoff = async (payloadContents, maxRetries = 5) => {
+            const callGeminiWithExponentialBackoff = async (currentChatHistory, maxRetries = 5) => {
                 const apiKey = ""; // API key is handled by the environment
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                let delay = 1000; // Start with 1 second
+                let delay = 1000;
 
                 for (let i = 0; i < maxRetries; i++) {
                     try {
                         const response = await fetch(apiUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: payloadContents })
+                            body: JSON.stringify({ contents: currentChatHistory })
                         });
 
                         if (!response.ok) {
@@ -673,12 +673,14 @@
                             result.candidates[0].content.parts.length > 0) {
                             return result.candidates[0].content.parts[0].text;
                         } else {
-                            throw new Error("Invalid response structure from Gemini API");
+                            console.error("Invalid response structure from Gemini API:", result);
+                            throw new Error("Received an invalid response structure from the API.");
                         }
                     } catch (error) {
+                        console.error(`Attempt ${i + 1} failed:`, error);
                         if (i === maxRetries - 1) throw error;
                         await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2; // Double the delay for the next retry
+                        delay *= 2;
                     }
                 }
             };
