@@ -12,13 +12,21 @@
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
 
     <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #e2e8f0;
+            --primary-color: #22d3ee;
+            --primary-color-dark: #0891b2;
+            --secondary-bg: #1e293b;
+            --border-color: #334155;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Changed to slate-900 */
-            color: #e2e8f0; /* Changed to slate-200 */
-            cursor: none; /* Hide the default cursor */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            cursor: none;
         }
-        /* Custom animated cursor */
         .cursor-dot, .cursor-outline {
             pointer-events: none;
             position: fixed;
@@ -32,27 +40,23 @@
         .cursor-dot {
             width: 8px;
             height: 8px;
-            background-color: #22d3ee; /* Changed to cyan-400 */
+            background-color: var(--primary-color);
         }
         .cursor-outline {
             width: 40px;
             height: 40px;
-            background-color: rgba(34, 211, 238, 0.2); /* Changed to cyan-400 with alpha */
-            transition-duration: 0s, 0s, 0.1s; /* Faster position update */
+            background-color: rgba(34, 211, 238, 0.2);
+            transition-duration: 0s, 0s, 0.1s;
         }
-        body:hover .cursor-dot, body:hover .cursor-outline {
-            opacity: 1;
-        }
-        /* Custom scrollbar */
+        body:hover .cursor-dot, body:hover .cursor-outline { opacity: 1; }
+        
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1e293b; } /* slate-800 */
-        ::-webkit-scrollbar-thumb { background: #0891b2; border-radius: 10px; } /* cyan-600 */
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; } /* cyan-500 */
+        ::-webkit-scrollbar-track { background: var(--secondary-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color-dark); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
 
-        /* Active nav link style */
-        .nav-link.active { background-color: #0891b2; color: white; } /* cyan-600 */
+        .nav-link.active { background-color: var(--primary-color-dark); color: white; }
 
-        /* Scroll reveal animation */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -60,7 +64,6 @@
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* Canvas for background effect */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -71,38 +74,21 @@
             opacity: 0.15;
         }
 
-        /* Typing animation cursor style */
         .typed-cursor {
-            color: #22d3ee; /* cyan-400 */
+            color: var(--primary-color);
             font-size: 3.5rem;
             animation: typed-blink 0.7s infinite;
         }
-        @keyframes typed-blink {
-            50% { opacity: 0.0; }
-        }
+        @keyframes typed-blink { 50% { opacity: 0.0; } }
         
-        /* AI Assistant Chat Styles */
-        #chat-window {
-            height: 400px;
-            overflow-y: auto;
-        }
-        .chat-message {
-            max-width: 80%;
-        }
-        .user-message {
-            background-color: #0891b2; /* cyan-600 */
-            color: white;
-        }
-        .assistant-message {
-            background-color: #1e293b; /* slate-800 */
-            color: #e2e8f0;
-        }
+        #chat-window { height: 400px; overflow-y: auto; }
+        .chat-message { max-width: 80%; }
+        .user-message { background-color: var(--primary-color-dark); color: white; }
+        .assistant-message { background-color: var(--secondary-bg); color: var(--text-color); }
+        
         .typing-indicator span {
-            height: 8px;
-            width: 8px;
-            background-color: #94a3b8; /* slate-400 */
-            border-radius: 50%;
-            display: inline-block;
+            height: 8px; width: 8px; background-color: #94a3b8;
+            border-radius: 50%; display: inline-block;
             animation: typing-bounce 1.4s infinite ease-in-out both;
         }
         .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
@@ -111,13 +97,42 @@
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1.0); }
         }
-        .timeline-item-title {
-            font-weight: 600;
-            color: #a5f3fc; /* cyan-200 */
+
+        .timeline-item-title { font-weight: 600; color: #a5f3fc; }
+        .timeline-item-subtitle { font-size: 0.9rem; color: #94a3b8; }
+
+        .skill-tag {
+            background-color: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #a5f3fc;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .timeline-item-subtitle {
-            font-size: 0.9rem;
-            color: #94a3b8; /* slate-400 */
+        .skill-tag:hover {
+            background-color: rgba(6, 182, 212, 0.8);
+            color: white;
+            transform: translateY(-3px);
+        }
+        .skill-icon {
+            font-size: 1.2em;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            color: #facc15; /* yellow-400 */
+            animation: float 3s ease-in-out infinite;
+        }
+        .achievement-icon.medal {
+            animation-delay: 1.5s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
     </style>
 </head>
@@ -202,13 +217,25 @@
 
         <!-- About Section -->
         <section id="about" class="py-20 reveal">
-            <h3 class="text-3xl font-bold mb-8">About Me</h3>
-            <div class="bg-slate-900 bg-opacity-50 p-8 rounded-xl border border-slate-800">
-                <p class="text-slate-300 leading-relaxed">
-                     Hello! I'm a driven and multifaceted Computer Science graduate from University of Delhi. With a strong foundation in AI, Machine Learning, Cyber Security and development, I am passionate about applying technology and legal provisions to solve real-world problems. My experience extends beyond academics, with leadership roles in multiple college societies, internships, and numerous accolades in debates and presentations. I thrive in dynamic environments and am committed to continuous learning and making a tangible impact.
-                </p>
+            <h3 class="text-3xl font-bold mb-8 text-center">About Me</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center bg-slate-900 bg-opacity-50 p-8 rounded-xl border border-slate-800">
+                <div class="md:col-span-1 flex justify-center">
+                     <div class="relative w-48 h-48">
+                        <div class="absolute inset-0 bg-cyan-500 rounded-full blur-2xl opacity-50"></div>
+                        <i class="fas fa-brain absolute text-7xl text-cyan-300 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></i>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-slate-300 leading-relaxed text-lg">
+                        Hello! I'm a driven <strong class="text-cyan-400">Computer Science graduate</strong> from the University of Delhi with a strong foundation in <strong class="text-cyan-400">AI, ML, & Cyber Security</strong>.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed mt-4 text-lg">
+                        I'm passionate about applying technology and legal provisions to solve real-world problems. My experience extends beyond academics, with leadership roles, internships, and numerous accolades in public speaking. I thrive in dynamic environments and am committed to <strong class="text-cyan-400">continuous learning and making a tangible impact.</strong>
+                    </p>
+                </div>
             </div>
         </section>
+
 
         <!-- Education Section -->
         <section id="education" class="py-20 reveal">
@@ -221,7 +248,7 @@
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
                     <h4 class="text-xl font-semibold text-cyan-400">Mother's Global School</h4>
-                    <p class="text-slate-400">Science (PCM) with Computer Science | 2013 - 2022</p>
+                    <p class="text-slate-400">Science (PCM) with Computer Science</p>
                     <p class="mt-2 text-slate-300 font-medium">Grade: 94.4% (Std. 10), 93.6% (Std. 12)</p>
                 </div>
             </div>
@@ -231,6 +258,23 @@
         <section id="experience" class="py-20 reveal">
             <h3 class="text-3xl font-bold mb-12">Experience & Responsibilities</h3>
             <div class="relative border-l-2 border-cyan-500 pl-10">
+                <!-- Keshav Mahavidyalaya -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
+                    <h4 class="text-xl font-semibold text-white">Keshav Mahavidyalaya - Delhi University</h4>
+                    <p class="timeline-item-subtitle">Sep 2024 - Present · 1 yr</p>
+                    <p class="mt-2 text-slate-400"><strong class="timeline-item-title">NEP SAARTHI:</strong> Student Ambassador for Academic Reforms.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Student Coordinator - Viksit Bharat @2047:</strong> Jan 2024 - Jul 2025.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Member of College Magazine Editorial Team:</strong> Nov 2022 - Jun 2025.</p>
+                </div>
+                <!-- MyGov -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
+                    <h4 class="text-xl font-semibold text-white">Campus Ambassador</h4>
+                    <p class="timeline-item-subtitle">MyGov India</p>
+                    <p class="text-sm text-slate-400 mt-1">Aug 2023 - Jul 2025 · 2 yrs</p>
+                </div>
+                <!-- DU Intern -->
                 <div class="mb-10">
                     <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
                     <h4 class="text-xl font-semibold text-white">Intern</h4>
@@ -238,40 +282,55 @@
                     <p class="text-sm text-slate-400 mt-1">Nov 2024 - May 2025 · 7 mos</p>
                     <p class="mt-2 text-slate-400">Part-Time Intern in Vice Chancellor Internship Scheme.</p>
                 </div>
-                <div class="mb-10">
-                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
-                    <h4 class="text-xl font-semibold text-white">Campus Ambassador</h4>
-                    <p class="timeline-item-subtitle">MyGov India</p>
-                    <p class="text-sm text-slate-400 mt-1">Aug 2023 - Jul 2025 · 2 yrs</p>
-                </div>
+                <!-- Vagmita Debsoc -->
                 <div class="mb-10">
                     <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
                     <h4 class="text-xl font-semibold text-white">Vagmita Debsoc</h4>
-                    <p class="timeline-item-subtitle">Keshav Mahavidyalaya</p>
-                    <p class="mt-2 text-slate-400"><span class="timeline-item-title">Member:</span> Mar 2024 - May 2025 · 1 yr 3 mos</p>
-                    <p class="mt-1 text-slate-400"><span class="timeline-item-title">Executive:</span> Sep 2023 - Mar 2024 · 7 mos</p>
-                    <p class="mt-1 text-slate-400"><span class="timeline-item-title">Member:</span> Jan 2023 - Sep 2023 · 9 mos</p>
+                    <p class="timeline-item-subtitle">2 yrs 5 mos</p>
+                    <p class="mt-2 text-slate-400"><strong class="timeline-item-title">Member:</strong> Mar 2024 - May 2025. Won 45+ competitions (Debate, GD, etc.) at Unacademy, IIM Ranchi, DTU.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Executive:</strong> Sep 2023 - Mar 2024.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Member:</strong> Jan 2023 - Sep 2023.</p>
                 </div>
+                <!-- VBYLD -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
+                    <h4 class="text-xl font-semibold text-white">VBYLD Representative (Manufacturing)</h4>
+                    <p class="timeline-item-subtitle">Ministry of Youth Affairs & Sports</p>
+                    <p class="text-sm text-slate-400 mt-1">Jan 2025 · 1 mo</p>
+                    <p class="mt-2 text-slate-400">Representative of Delhi at Viksit Bharat Young Leaders Dialogue.</p>
+                </div>
+                <!-- BLITZ -->
                 <div class="mb-10">
                     <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
                     <h4 class="text-xl font-semibold text-white">BLITZ, The Computer Science Society</h4>
-                    <p class="timeline-item-subtitle">Keshav Mahavidyalaya</p>
-                    <p class="mt-2 text-slate-400"><span class="timeline-item-title">Secretary:</span> Aug 2023 - Jun 2024 · 11 mos</p>
-                    <p class="mt-1 text-slate-400"><span class="timeline-item-title">Executive:</span> Jan 2023 - Aug 2023 · 8 mos</p>
+                    <p class="timeline-item-subtitle">1 yr 6 mos</p>
+                    <p class="mt-2 text-slate-400"><strong class="timeline-item-title">Secretary:</strong> Aug 2023 - Jun 2024.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Executive:</strong> Jan 2023 - Aug 2023.</p>
                 </div>
-                 <div class="mb-10">
+                 <!-- Anuvadini -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
+                    <h4 class="text-xl font-semibold text-white">Contributor</h4>
+                    <p class="timeline-item-subtitle">Anuvadini AI</p>
+                    <p class="text-sm text-slate-400 mt-1">Apr 2024 - May 2024 · 2 mos</p>
+                    <p class="mt-2 text-slate-400">Contributed to drafting, layout design and quality assurance for NIMI Books Project.</p>
+                </div>
+                <!-- School -->
+                <div class="mb-10">
                     <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
                     <h4 class="text-xl font-semibold text-white">Mother's Global School</h4>
-                    <p class="mt-2 text-slate-400"><span class="timeline-item-title">Head Boy:</span> Aug 2021 - Mar 2022 · 8 mos</p>
-                    <p class="mt-1 text-slate-400"><span class="timeline-item-title">Secretary General (MGMUN):</span> Aug 2021 · 1 mo</p>
-                    <p class="mt-1 text-slate-400"><span class="timeline-item-title">House Captain:</span> Aug 2020 - Jul 2021 · 1 yr</p>
+                    <p class="timeline-item-subtitle">1 yr 8 mos</p>
+                    <p class="mt-2 text-slate-400"><strong class="timeline-item-title">Head Boy:</strong> Aug 2021 - Mar 2022.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Secretary General (MGMUN):</strong> Aug 2021.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">House Captain:</strong> Aug 2020 - Jul 2021.</p>
                 </div>
+                <!-- Interact Club -->
                 <div class="mb-10">
                     <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
                     <h4 class="text-xl font-semibold text-white">Interact: Rotary Sponsored Club</h4>
-                    <p class="timeline-item-subtitle">Mother's Global School</p>
-                    <p class="mt-2 text-slate-400"><span class="timeline-item-title">President:</span> Aug 2020 - Jul 2021 · 1 yr</p>
-                    <p class="mt-1 text-slate-400"><span class="timeline-item-title">Vice President:</span> Aug 2019 - Jul 2020 · 1 yr</p>
+                    <p class="timeline-item-subtitle">2 yrs</p>
+                    <p class="mt-2 text-slate-400"><strong class="timeline-item-title">President:</strong> Aug 2020 - Jul 2021.</p>
+                    <p class="mt-1 text-slate-400"><strong class="timeline-item-title">Vice President:</strong> Aug 2019 - Jul 2020.</p>
                 </div>
             </div>
         </section>
@@ -300,53 +359,28 @@
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
                     <h4 class="text-lg font-semibold text-cyan-400">Copyright Law</h4>
                     <p class="text-slate-400">University of Pennsylvania · Issued Aug 2025</p>
-                    <a href="#" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/LHXEWDH3IMI0?utm_source%3Dandroid%26utm_medium%3Dcertificate%26utm_content%3Dcert_image%26utm_campaign%3Dsharing_cta%26utm_product%3Dcourse" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                </div>
+                <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
+                    <h4 class="text-lg font-semibold text-cyan-400">Trademark Law</h4>
+                    <p class="text-slate-400">University of Pennsylvania · Issued Aug 2025</p>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/4WC3IML7VA8W?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
                     <h4 class="text-lg font-semibold text-cyan-400">Introduction to Intellectual Property</h4>
                     <p class="text-slate-400">University of Pennsylvania · Issued Jul 2025</p>
-                    <a href="#" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/4D82CN5XB78H?utm_source%3Dandroid%26utm_medium%3Dcertificate%26utm_content%3Dcert_image%26utm_campaign%3Dsharing_cta%26utm_product%3Dcourse" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
                     <h4 class="text-lg font-semibold text-cyan-400">Google Digital Marketing Certificate</h4>
                     <p class="text-slate-400">Google · Issued Sep 2022</p>
-                    <a href="#" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://i.ibb.co/1t89Z5NR/Google-digital-marketing-certificate.jpg" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
                 </div>
             </div>
         </section>
 
-        <!-- Volunteering Section -->
-        <section id="volunteering" class="py-20 reveal">
-            <h3 class="text-3xl font-bold mb-8">Volunteering</h3>
-            <div class="relative border-l-2 border-cyan-500 pl-10">
-                <div class="mb-10">
-                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
-                    <h4 class="text-xl font-semibold text-white">NEP SAARTHI</h4>
-                    <p class="timeline-item-subtitle">Keshav Mahavidyalaya - Delhi University</p>
-                    <p class="text-sm text-slate-400 mt-1">Sep 2024 - Present</p>
-                    <p class="mt-2 text-slate-400">Student Ambassador for Academic Reforms in Transforming Higher Education in India.</p>
-                </div>
-                <div class="mb-10">
-                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
-                    <h4 class="text-xl font-semibold text-white">Campus Ambassador</h4>
-                    <p class="timeline-item-subtitle">MyGov India</p>
-                    <p class="text-sm text-slate-400 mt-1">Aug 2023 - Jul 2025</p>
-                </div>
-                <div class="mb-10">
-                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
-                    <h4 class="text-xl font-semibold text-white">Class Representative</h4>
-                    <p class="timeline-item-subtitle">Keshav Mahavidyalaya</p>
-                    <p class="text-sm text-slate-400 mt-1">Nov 2022 - Jul 2025</p>
-                </div>
-                <div class="mb-10">
-                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-cyan-500"></div>
-                    <h4 class="text-xl font-semibold text-white">Speaker</h4>
-                    <p class="timeline-item-subtitle">BLITZ, The Computer Science Society</p>
-                    <p class="text-sm text-slate-400 mt-1">Feb 2024 · Session on AI / ML</p>
-                    <p class="text-sm text-slate-400 mt-1">Jan 2023 · Education Session</p>
-                </div>
-            </div>
-        </section>
+        <!-- Volunteering Section is now integrated into Experience -->
+        <section id="volunteering" class="hidden"></section>
 
         <!-- Skills Section -->
         <section id="skills" class="py-20 reveal">
@@ -354,52 +388,41 @@
             <div class="mb-10">
                 <h4 class="text-2xl font-semibold mb-4 text-cyan-300">Technical Skills</h4>
                 <div class="flex flex-wrap gap-3">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">C++</span>
-                    <span class="skill-tag">Artificial Intelligence</span>
-                    <span class="skill-tag">Machine Learning</span>
-                    <span class="skill-tag">Data Analysis</span>
-                    <span class="skill-tag">Full-stack Web Development</span>
-                    <span class="skill-tag">App Development</span>
-                    <span class="skill-tag">Natural Language Processing</span>
-                    <span class="skill-tag">SEO</span>
+                    <span class="skill-tag"><i class="fab fa-python skill-icon"></i> Python</span>
+                    <span class="skill-tag"><i class="fas fa-file-code skill-icon"></i> C++</span>
+                    <span class="skill-tag"><i class="fas fa-robot skill-icon"></i> Artificial Intelligence</span>
+                    <span class="skill-tag"><i class="fas fa-brain skill-icon"></i> Machine Learning</span>
+                    <span class="skill-tag"><i class="fas fa-chart-line skill-icon"></i> Data Analysis</span>
+                    <span class="skill-tag"><i class="fas fa-code skill-icon"></i> Full-stack Web Dev</span>
+                    <span class="skill-tag"><i class="fas fa-mobile-alt skill-icon"></i> App Development</span>
+                    <span class="skill-tag"><i class="fas fa-language skill-icon"></i> NLP</span>
+                    <span class="skill-tag"><i class="fab fa-google skill-icon"></i> SEO</span>
                 </div>
             </div>
             <div>
                 <h4 class="text-2xl font-semibold mb-4 text-cyan-300">Soft Skills</h4>
                  <div class="flex flex-wrap gap-3">
-                    <span class="skill-tag">Leadership</span>
-                    <span class="skill-tag">Team Management</span>
-                    <span class="skill-tag">Professional Communication</span>
-                    <span class="skill-tag">Problem Solving</span>
-                    <span class="skill-tag">Critical Thinking</span>
-                    <span class="skill-tag">Public Speaking</span>
-                    <span class="skill-tag">Creative Writing</span>
-                    <span class="skill-tag">Event Management</span>
+                    <span class="skill-tag"><i class="fas fa-users skill-icon"></i> Leadership</span>
+                    <span class="skill-tag"><i class="fas fa-tasks skill-icon"></i> Team Management</span>
+                    <span class="skill-tag"><i class="fas fa-comments skill-icon"></i> Communication</span>
+                    <span class="skill-tag"><i class="fas fa-lightbulb skill-icon"></i> Problem Solving</span>
+                    <span class="skill-tag"><i class="fas fa-check-double skill-icon"></i> Critical Thinking</span>
+                    <span class="skill-tag"><i class="fas fa-microphone-alt skill-icon"></i> Public Speaking</span>
+                    <span class="skill-tag"><i class="fas fa-pencil-alt skill-icon"></i> Creative Writing</span>
+                    <span class="skill-tag"><i class="fas fa-calendar-check skill-icon"></i> Event Management</span>
                  </div>
             </div>
-            <style>
-                .skill-tag {
-                    background-color: rgba(6, 182, 212, 0.1);
-                    border: 1px solid rgba(6, 182, 212, 0.3);
-                    color: #a5f3fc; /* cyan-200 */
-                    padding: 0.5rem 1rem;
-                    border-radius: 9999px;
-                    font-weight: 500;
-                    transition: all 0.3s ease;
-                }
-                .skill-tag:hover {
-                    background-color: rgba(6, 182, 212, 0.8);
-                    color: white;
-                    transform: translateY(-3px);
-                }
-            </style>
         </section>
 
         <!-- Achievements Section -->
         <section id="achievements" class="py-20 reveal">
             <h3 class="text-3xl font-bold mb-8">Awards & Achievements</h3>
             <div class="bg-slate-900 bg-opacity-50 p-8 rounded-xl border border-slate-800 text-center">
+                <div class="flex justify-center items-center gap-8 mb-6">
+                    <i class="fas fa-trophy achievement-icon"></i>
+                    <i class="fas fa-medal achievement-icon medal"></i>
+                    <i class="fas fa-award achievement-icon"></i>
+                </div>
                 <p class="text-slate-300 leading-relaxed mb-6">
                      Winner of over 45 competitions in debating, group discussions, and public speaking since January 2023, including top positions at events organized by Unacademy, IIM Ranchi, Delhi Technological University, and various colleges of the University of Delhi.
                 </p>
@@ -417,7 +440,6 @@
             </p>
             <div class="max-w-2xl mx-auto bg-slate-900 bg-opacity-50 rounded-xl border border-slate-800">
                 <div id="chat-window" class="p-4 space-y-4">
-                    <!-- Chat messages will be appended here -->
                     <div class="chat-message self-start">
                         <div class="assistant-message p-3 rounded-lg inline-block">
                             Hello! How can I help you learn more about Rahul's profile today?
@@ -438,7 +460,7 @@
         <section id="contact" class="py-20 reveal">
             <h3 class="text-3xl font-bold mb-8 text-center">Let's Connect</h3>
             <div class="max-w-2xl mx-auto bg-slate-900 bg-opacity-50 p-8 rounded-xl border border-slate-800">
-                <form id="contact-form">
+                <form id="contact-form" action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST">
                     <div class="mb-4">
                         <label for="name" class="block text-slate-300 mb-2">Name</label>
                         <input type="text" id="name" name="name" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-white" required>
@@ -457,9 +479,9 @@
             </div>
             <div class="text-center mt-12">
                 <p class="text-slate-400 mb-4">Find me on</p>
-                <div class="flex justify-center space-x-6">
+                <div class="flex justify-center items-center space-x-6">
+                    <a href="mailto:raghavrahul4002@gmail.com" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fas fa-envelope"></i></a>
                     <a href="https://www.linkedin.com/in/rahul-arora-00689524b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fab fa-linkedin"></i></a>
-                    <!-- IMPORTANT: Please replace '#' with your actual GitHub profile URL -->
                     <a href="#" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fab fa-github"></i></a>
                 </div>
             </div>
@@ -501,11 +523,11 @@
                 drops[i] = 1;
             }
             function drawMatrix() {
-                ctx.fillStyle = 'rgba(15, 23, 42, .1)'; // slate-900 with alpha
+                ctx.fillStyle = 'rgba(15, 23, 42, .1)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 for (let i = 0; i < drops.length; i++) {
                     const text = letters[Math.floor(Math.random() * letters.length)];
-                    ctx.fillStyle = '#0891b2'; // cyan-600
+                    ctx.fillStyle = '#0891b2';
                     ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                     drops[i]++;
                     if (drops[i] * fontSize > canvas.height && Math.random() > .95) {
@@ -546,9 +568,12 @@
             const sectionObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        // Special handling for volunteering which is now hidden
+                        if (id === 'volunteering') return;
                         navLinks.forEach(link => {
                             link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            if (link.getAttribute('href').substring(1) === id) {
                                 link.classList.add('active');
                             }
                         });
@@ -570,16 +595,40 @@
                 link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
             });
 
-            // --- Contact Form Handling ---
+            // --- Contact Form Handling (Formspree) ---
             const contactForm = document.getElementById('contact-form');
             const formMessage = document.getElementById('form-message');
-            contactForm.addEventListener('submit', function(e) {
+            // IMPORTANT: Replace YOUR_UNIQUE_ID with your actual Formspree endpoint ID
+            contactForm.action = "https://formspree.io/f/raghavrahul4002@gmail.com"; 
+
+            contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
-                formMessage.className = 'mt-4 text-center text-green-400';
-                contactForm.reset();
-                setTimeout(() => { formMessage.textContent = ''; }, 5000);
+                const form = e.target;
+                const data = new FormData(form);
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: data,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
+                        formMessage.className = 'mt-4 text-center text-green-400';
+                        form.reset();
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                } catch (error) {
+                    formMessage.textContent = 'Oops! There was a problem submitting your form. Please try again later.';
+                    formMessage.className = 'mt-4 text-center text-red-400';
+                }
+                 setTimeout(() => { formMessage.textContent = ''; }, 5000);
             });
+
 
             // --- AI Assistant Chat Logic ---
             const chatWindow = document.getElementById('chat-window');
@@ -587,36 +636,35 @@
             const sendButton = document.getElementById('send-button');
             
             const portfolioContext = `
-                You are a professional career assistant for Rahul Arora. Your goal is to answer questions about his profile accurately and concisely based on the following information. Do not make up information.
-                
+                You are a professional career assistant for Rahul Arora. Your goal is to answer questions about his profile accurately and concisely based on the following information. Do not make up information. Be friendly and helpful.
+
                 **Name:** Rahul Arora
                 **Role:** Computer Science graduate with a passion for Law and Management.
+                **About:** A driven Computer Science graduate from the University of Delhi with a strong foundation in AI, ML, & Cyber Security. Passionate about applying technology and legal provisions to solve real-world problems. Experienced in leadership roles, internships, and a winner of numerous public speaking accolades.
                 **Education:**
                 - B.Sc. (Honours) Computer Science from Delhi University with 9.45 CGPA.
-                - Schooling from Mother's Global School with 93.6% in Std. 12 and 94.4% in Std. 10.
+                - Schooling from Mother's Global School.
                 **Experience:**
-                - Intern at Delhi University (Vice Chancellor Internship Scheme).
-                - Campus Ambassador at MyGov India.
-                - Multiple roles at Vagmita Debsoc including Member and Executive.
-                - Multiple roles at BLITZ, The Computer Science Society, including Secretary and Executive.
-                - Leadership roles at Mother's Global School including Head Boy, Secretary General (MGMUN), and House Captain.
-                - President and Vice President of the Interact Club.
+                - **Keshav Mahavidyalaya:** NEP SAARTHI (Student Ambassador), Student Coordinator for Viksit Bharat @2047, Member of College Magazine Editorial Team.
+                - **MyGov India:** Campus Ambassador.
+                - **Delhi University:** Part-Time Intern (Vice Chancellor Internship Scheme).
+                - **Vagmita Debsoc:** Member and Executive, winning over 45 debating and public speaking competitions.
+                - **Ministry of Youth Affairs & Sports:** VBYLD Representative for Manufacturing track.
+                - **BLITZ (CS Society):** Secretary and Executive.
+                - **Anuvadini AI:** Contributor for educational materials.
+                - **Mother's Global School:** Head Boy, Secretary General (MGMUN), House Captain.
+                - **Interact Club:** President and Vice President.
                 **Publications:**
                 - "DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System" in ETASR.
                 - "Navigating the Landscape of Text-based Gen-AI" in IOSR-JCE.
                 **Certifications:**
                 - Copyright Law (University of Pennsylvania)
+                - Trademark Law (University of Pennsylvania)
                 - Introduction to Intellectual Property (University of Pennsylvania)
                 - Google Digital Marketing Certificate
-                **Volunteering:**
-                - NEP SAARTHI at Keshav Mahavidyalaya.
-                - Campus Ambassador, Class Representative, and Speaker at various events.
-                **Technical Skills:**
-                - Python, C++, AI, ML, Data Analysis, Full-stack Web Development, App Development, NLP, SEO.
-                **Soft Skills:**
-                - Leadership, Team Management, Professional Communication, Problem Solving, Critical Thinking, Public Speaking, Creative Writing, Event Management.
-                **Achievements:**
-                - Winner of over 45 competitions in debating, public speaking, etc., with notable wins at Unacademy and IIM Ranchi events.
+                **Technical Skills:** Python, C++, AI, ML, Data Analysis, Full-stack Web Development, App Development, NLP, SEO.
+                **Soft Skills:** Leadership, Team Management, Professional Communication, Problem Solving, Critical Thinking, Public Speaking, Creative Writing, Event Management.
+                **Achievements:** Winner of over 45 competitions in debating, public speaking, etc., with notable wins at Unacademy and IIM Ranchi events.
                 Now, please answer the user's questions.
             `;
 
@@ -651,7 +699,7 @@
             };
             
             const callGeminiWithExponentialBackoff = async (currentChatHistory, maxRetries = 5) => {
-                const apiKey = ""; // API key is handled by the environment
+                const apiKey = ""; // This will be handled by the execution environment.
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
                 let delay = 1000;
 
@@ -664,6 +712,11 @@
                         });
 
                         if (!response.ok) {
+                            // Don't retry on client-side errors, but do on server-side ones
+                            if (response.status >= 400 && response.status < 500) {
+                                console.error("Client-side error:", response.status, await response.text());
+                                throw new Error(`API request failed with status ${response.status}.`);
+                            }
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
 
@@ -673,14 +726,15 @@
                             result.candidates[0].content.parts.length > 0) {
                             return result.candidates[0].content.parts[0].text;
                         } else {
-                            console.error("Invalid response structure from Gemini API:", result);
-                            throw new Error("Received an invalid response structure from the API.");
+                            // This case handles valid but empty/unexpected responses
+                             console.error("Invalid response structure from Gemini API:", result);
+                             throw new Error("Received an invalid response structure from the API.");
                         }
                     } catch (error) {
-                        console.error(`Attempt ${i + 1} failed:`, error);
-                        if (i === maxRetries - 1) throw error;
+                        console.log(`Attempt ${i + 1} failed. Retrying in ${delay}ms...`);
+                        if (i === maxRetries - 1) throw error; // Throw error on last attempt
                         await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
+                        delay *= 2; // Exponential backoff
                     }
                 }
             };
@@ -688,10 +742,10 @@
 
             const appendMessage = (text, sender) => {
                 const messageWrapper = document.createElement('div');
-                messageWrapper.className = `chat-message flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+                messageWrapper.className = `chat-message flex w-full ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
                 
                 const messageElement = document.createElement('div');
-                messageElement.className = `${sender === 'user' ? 'user-message' : 'assistant-message'} p-3 rounded-lg inline-block`;
+                messageElement.className = `p-3 rounded-lg inline-block max-w-full ${sender === 'user' ? 'user-message' : 'assistant-message'}`;
                 messageElement.textContent = text;
                 
                 messageWrapper.appendChild(messageElement);
