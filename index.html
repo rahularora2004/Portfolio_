@@ -433,9 +433,9 @@
 
         <!-- AI Assistant Section -->
         <section id="assistant" class="py-20 reveal">
-            <h3 class="text-3xl font-bold mb-8 text-center">✨ AI Career Assistant</h3>
+            <h3 class="text-3xl font-bold mb-8 text-center">✨ Portfolio Assistant</h3>
             <p class="text-center text-slate-400 max-w-2xl mx-auto mb-8">
-                 Have questions about my profile? Ask my AI assistant, powered by Gemini. You can ask about my skills, project experience, or career goals.
+                 Have questions about my profile? Ask my assistant. You can ask about my skills, project experience, or career goals.
             </p>
             <div class="max-w-2xl mx-auto bg-slate-900 bg-opacity-50 rounded-xl border border-slate-800">
                 <div id="chat-window" class="p-4 space-y-4">
@@ -459,7 +459,7 @@
         <section id="contact" class="py-20 reveal">
             <h3 class="text-3xl font-bold mb-8 text-center">Let's Connect</h3>
             <div class="max-w-2xl mx-auto bg-slate-900 bg-opacity-50 p-8 rounded-xl border border-slate-800">
-                <form id="contact-form" action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST">
+                <form id="contact-form" method="POST">
                     <div class="mb-4">
                         <label for="name" class="block text-slate-300 mb-2">Name</label>
                         <input type="text" id="name" name="name" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-white" required>
@@ -481,7 +481,8 @@
                 <div class="flex justify-center items-center space-x-6">
                     <a href="mailto:raghavrahul4002@gmail.com" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fas fa-envelope"></i></a>
                     <a href="https://www.linkedin.com/in/rahul-arora-00689524b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fab fa-github"></i></a>
+                    <a href="https://github.com/rahularora2004" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/rahul.arora2004/" target="_blank" class="text-slate-400 hover:text-cyan-400 text-2xl transition-colors duration-300"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </section>
@@ -568,7 +569,6 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const id = entry.target.getAttribute('id');
-                        // Special handling for volunteering which is now hidden
                         if (id === 'volunteering') return;
                         navLinks.forEach(link => {
                             link.classList.remove('active');
@@ -597,8 +597,7 @@
             // --- Contact Form Handling (Formspree) ---
             const contactForm = document.getElementById('contact-form');
             const formMessage = document.getElementById('form-message');
-            // IMPORTANT: Replace YOUR_UNIQUE_ID with your actual Formspree endpoint ID
-            contactForm.action = "https://formspree.io/f/raghavrahul4002@gmail.com"; 
+            contactForm.action = "https://formspree.io/f/mvojoqly"; // Replace with your Formspree endpoint
 
             contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
@@ -619,125 +618,64 @@
                         formMessage.className = 'mt-4 text-center text-green-400';
                         form.reset();
                     } else {
+                        const responseData = await response.json();
+                        if (responseData.errors) {
+                            throw new Error(responseData.errors.map(error => error.message).join(", "));
+                        }
                         throw new Error('Network response was not ok.');
                     }
                 } catch (error) {
-                    formMessage.textContent = 'Oops! There was a problem submitting your form. Please try again later.';
+                    formMessage.textContent = `Oops! There was a problem: ${error.message}`;
                     formMessage.className = 'mt-4 text-center text-red-400';
                 }
-                 setTimeout(() => { formMessage.textContent = ''; }, 5000);
+                 setTimeout(() => { formMessage.textContent = ''; }, 6000);
             });
 
-
-            // --- AI Assistant Chat Logic ---
+            // --- Rule-Based Portfolio Assistant ---
             const chatWindow = document.getElementById('chat-window');
             const chatInput = document.getElementById('chat-input');
             const sendButton = document.getElementById('send-button');
-            
-            const portfolioContext = `
-                You are a professional career assistant for Rahul Arora. Your goal is to answer questions about his profile accurately and concisely based on the following information. Do not make up information. Be friendly and helpful.
 
-                **Name:** Rahul Arora
-                **Role:** Computer Science graduate with a passion for Law and Management.
-                **About:** A driven Computer Science graduate from the University of Delhi with a strong foundation in AI, ML, & Cyber Security. Passionate about applying technology and legal provisions to solve real-world problems. Experienced in leadership roles, internships, and a winner of numerous public speaking accolades.
-                **Education:**
-                - B.Sc. (Honours) Computer Science from Delhi University with 9.45 CGPA.
-                - Schooling from Mother's Global School.
-                **Experience:**
-                - **Keshav Mahavidyalaya:** NEP SAARTHI (Student Ambassador), Student Coordinator for Viksit Bharat @2047, Member of College Magazine Editorial Team.
-                - **MyGov India:** Campus Ambassador.
-                - **Delhi University:** Part-Time Intern (Vice Chancellor Internship Scheme).
-                - **Vagmita Debsoc:** Member and Executive, winning over 45 debating and public speaking competitions.
-                - **Ministry of Youth Affairs & Sports:** VBYLD Representative for Manufacturing track.
-                - **BLITZ (CS Society):** Secretary and Executive.
-                - **Anuvadini AI:** Contributor for educational materials.
-                - **Mother's Global School:** Head Boy, Secretary General (MGMUN), House Captain.
-                - **Interact Club:** President and Vice President.
-                **Publications:**
-                - "DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System" in ETASR.
-                - "Navigating the Landscape of Text-based Gen-AI" in IOSR-JCE.
-                **Certifications:**
-                - Copyright Law (University of Pennsylvania)
-                - Trademark Law (University of Pennsylvania)
-                - Introduction to Intellectual Property (University of Pennsylvania)
-                - Google Digital Marketing Certificate
-                **Technical Skills:** Python, C++, AI, ML, Data Analysis, Full-stack Web Development, App Development, NLP, SEO.
-                **Soft Skills:** Leadership, Team Management, Professional Communication, Problem Solving, Critical Thinking, Public Speaking, Creative Writing, Event Management.
-                **Achievements:** Winner of over 45 competitions in debating, public speaking, etc., with notable wins at Unacademy and IIM Ranchi events.
-                Now, please answer the user's questions.
-            `;
+            const responses = {
+                "default": "I can help with questions about Rahul's skills, experience, education, and projects. What would you like to know?",
+                "greeting": "Hello! I'm Rahul's portfolio assistant. How can I help you today?",
+                "skills": "Rahul has a strong set of technical skills including Python, C++, AI/ML, Full-stack Web Development, and SEO. He also excels in soft skills like Leadership, Public Speaking, and Team Management. You can see a full list in the 'Skills' section.",
+                "experience": "Rahul has a diverse range of experience, including an internship at Delhi University, being a Campus Ambassador for MyGov India, and holding leadership roles in several university societies like the Debating Society and the Computer Science Society. For more details, check out the 'Experience' section.",
+                "education": "Rahul is pursuing a B.Sc. (Honours) in Computer Science from the University of Delhi, where he maintains a CGPA of 9.45. He completed his schooling at Mother's Global School with high grades.",
+                "projects": "Rahul has worked on several projects, including two published research papers: 'DeepYoga,' a real-time yoga pose recognition system, and another on 'Text-based Gen-AI.' You can find links to these in the 'Publications' section.",
+                "contact": "You can connect with Rahul via the contact form on this page or through his LinkedIn, GitHub, or Instagram profiles. The links are at the bottom of the page.",
+                "achievements": "Rahul is a highly accomplished public speaker, having won over 45 competitions in debating and group discussions at prestigious events organized by institutions like Unacademy and IIM Ranchi. You can view a detailed list by clicking the button in the 'Awards & Achievements' section.",
+                "publications": "Rahul has co-authored two research papers: 'DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System' and 'Navigating the Landscape of Text-based Gen-AI.' You can find direct links to them in the 'Publications' section."
+            };
 
-            let chatHistory = [
-                { role: "user", parts: [{ text: portfolioContext }] },
-                { role: "model", parts: [{ text: "Understood. I'm ready to act as Rahul Arora's career assistant. How can I help?" }] }
-            ];
+            const getResponse = (input) => {
+                const lowerInput = input.toLowerCase();
+                if (lowerInput.includes("hello") || lowerInput.includes("hi") || lowerInput.includes("hey")) return responses.greeting;
+                if (lowerInput.includes("skill") || lowerInput.includes("technical") || lowerInput.includes("soft")) return responses.skills;
+                if (lowerInput.includes("experience") || lowerInput.includes("work") || lowerInput.includes("intern")) return responses.experience;
+                if (lowerInput.includes("education") || lowerInput.includes("college") || lowerInput.includes("school") || lowerInput.includes("degree")) return responses.education;
+                if (lowerInput.includes("project") || lowerInput.includes("research") || lowerInput.includes("paper")) return responses.publications;
+                if (lowerInput.includes("contact") || lowerInput.includes("email") || lowerInput.includes("connect")) return responses.contact;
+                if (lowerInput.includes("achievement") || lowerInput.includes("award") || lowerInput.includes("competition")) return responses.achievements;
+                if (lowerInput.includes("publication") || lowerInput.includes("paper")) return responses.publications;
+                return responses.default;
+            };
 
-
-            const sendMessage = async () => {
+            const sendMessage = () => {
                 const userInput = chatInput.value.trim();
                 if (userInput === '') return;
 
                 appendMessage(userInput, 'user');
                 chatInput.value = '';
+                
                 const typingIndicator = appendTypingIndicator();
 
-                chatHistory.push({ role: "user", parts: [{ text: userInput }] });
-
-                try {
-                    const responseText = await callGeminiWithExponentialBackoff(chatHistory);
-                    chatHistory.push({ role: "model", parts: [{ text: responseText }] });
-                    
+                setTimeout(() => {
                     typingIndicator.remove();
-                    appendMessage(responseText, 'assistant');
-
-                } catch (error) {
-                    typingIndicator.remove();
-                    appendMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'assistant');
-                    console.error("Error calling Gemini API:", error);
-                }
+                    const assistantResponse = getResponse(userInput);
+                    appendMessage(assistantResponse, 'assistant');
+                }, 1200); // Simulate thinking time
             };
-            
-            const callGeminiWithExponentialBackoff = async (currentChatHistory, maxRetries = 5) => {
-                const apiKey = ""; // This will be handled by the execution environment.
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                let delay = 1000;
-
-                for (let i = 0; i < maxRetries; i++) {
-                    try {
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: currentChatHistory })
-                        });
-
-                        if (!response.ok) {
-                            // Don't retry on client-side errors, but do on server-side ones
-                            if (response.status >= 400 && response.status < 500) {
-                                console.error("Client-side error:", response.status, await response.text());
-                                throw new Error(`API request failed with status ${response.status}.`);
-                            }
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-
-                        const result = await response.json();
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
-                            return result.candidates[0].content.parts[0].text;
-                        } else {
-                            // This case handles valid but empty/unexpected responses
-                             console.error("Invalid response structure from Gemini API:", result);
-                             throw new Error("Received an invalid response structure from the API.");
-                        }
-                    } catch (error) {
-                        console.log(`Attempt ${i + 1} failed. Retrying in ${delay}ms...`);
-                        if (i === maxRetries - 1) throw error; // Throw error on last attempt
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2; // Exponential backoff
-                    }
-                }
-            };
-
 
             const appendMessage = (text, sender) => {
                 const messageWrapper = document.createElement('div');
@@ -771,9 +709,7 @@
                     sendMessage();
                 }
             });
-
         });
     </script>
 </body>
 </html>
-
