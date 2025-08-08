@@ -19,8 +19,9 @@
             --primary-color-dark: #0891b2;
             --secondary-bg: #1e293b;
             --border-color: #334155;
-            --accent-color: #f87171; /* A new accent color for more variety */
-            --accent-color-dark: #ef4444;
+            --accent-color-red: #f87171; /* A new accent color for more variety */
+            --accent-color-orange: #fb923c;
+            --accent-color-green: #4ade80;
         }
 
         body {
@@ -58,7 +59,7 @@
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
 
         .nav-link.active { background-color: var(--primary-color-dark); color: white; }
-        .nav-link:hover { background-color: var(--accent-color); color: white; }
+        .nav-link:hover { background-color: var(--accent-color-red); color: white; }
 
         .reveal {
             opacity: 0;
@@ -110,7 +111,7 @@
 
         .achievement-icon {
             font-size: 2.5rem;
-            color: var(--accent-color); /* Updated to use the new accent color */
+            color: var(--accent-color-red); /* Updated to use the new accent color */
             animation: float 3s ease-in-out infinite;
         }
         .achievement-icon.medal {
@@ -207,7 +208,6 @@
                 <div class="md:col-span-1 flex justify-center">
                      <div class="relative w-48 h-48">
                          <div class="absolute inset-0 bg-cyan-500 rounded-full blur-2xl opacity-50"></div>
-                         <!-- Changed the icon to a glowing lightbulb and changed the color -->
                          <i class="fas fa-lightbulb absolute text-7xl text-yellow-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></i>
                      </div>
                 </div>
@@ -325,14 +325,14 @@
             <h3 class="text-3xl font-bold mb-8">Publications</h3>
             <div class="space-y-6">
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
-                    <h4 class="text-xl font-semibold text-cyan-400">DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System</h4>
+                    <h4 class="text-xl font-semibold text-orange-400">DeepYoga: Enhancing Practice with a Real-Time Yoga Pose Recognition System</h4>
                     <p class="text-slate-400">ETASR - Engineering, Technology & Applied Science Research · Oct 14, 2024</p>
-                    <a href="https://etasr.com/index.php/ETASR/article/view/8643" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Show Publication &rarr;</a>
+                    <a href="https://etasr.com/index.php/ETASR/article/view/8643" target="_blank" class="inline-block mt-3 text-orange-400 hover:text-orange-300">Show Publication &rarr;</a>
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
-                    <h4 class="text-xl font-semibold text-cyan-400">Navigating the Landscape of Text-based Gen-AI: Exploring Generic, Domain-Specific, and Indigenous LLMs</h4>
+                    <h4 class="text-xl font-semibold text-orange-400">Navigating the Landscape of Text-based Gen-AI: Exploring Generic, Domain-Specific, and Indigenous LLMs</h4>
                     <p class="text-slate-400">IOSR Journal of Computer Engineering (IOSR-JCE) · Aug 31, 2024</p>
-                    <a href="https://www.iosrjournals.org/iosr-jce/papers/Vol26-issue4/Ser-4/B2604041219.pdf" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Show Publication &rarr;</a>
+                    <a href="https://www.iosrjournals.org/iosr-jce/papers/Vol26-issue4/Ser-4/B2604041219.pdf" target="_blank" class="inline-block mt-3 text-orange-400 hover:text-orange-300">Show Publication &rarr;</a>
                 </div>
             </div>
         </section>
@@ -342,59 +342,119 @@
             <h3 class="text-3xl font-bold mb-8">Licenses & Certifications</h3>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
-                    <h4 class="text-lg font-semibold text-cyan-400">Copyright Law</h4>
+                    <h4 class="text-lg font-semibold text-orange-400">Copyright Law</h4>
                     <p class="text-slate-400">University of Pennsylvania · Issued Aug 2025</p>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/LHXEWDH3IMI0?utm_source%3Dandroid%26utm_medium%3Dcertificate%26utm_content%3Dcert_image%26utm_campaign%3Dsharing_cta%26utm_product%3Dcourse" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/LHXEWDH3IMI0?utm_source%3Dandroid%26utm_medium%3Dcertificate%26utm_content%3Dcert_image%26utm_campaign%3Dsharing_cta%26utm_product%3Dcourse" target="_blank" class="inline-block mt-3 text-orange-400 hover:text-orange-300">Verify &rarr;</a>
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
-                    <h4 class="text-lg font-semibold text-cyan-400">Trademark Law</h4>
+                    <h4 class="text-lg font-semibold text-orange-400">Trademark Law</h4>
                     <p class="text-slate-400">University of Pennsylvania · Issued Aug 2025</p>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/4WC3IML7VA8W?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/4WC3IML7VA8W?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" class="inline-block mt-3 text-orange-400 hover:text-orange-300">Verify &rarr;</a>
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
-                    <h4 class="text-lg font-semibold text-cyan-400">Introduction to Intellectual Property</h4>
+                    <h4 class="text-lg font-semibold text-orange-400">Introduction to Intellectual Property</h4>
                     <p class="text-slate-400">University of Pennsylvania · Issued Jul 2025</p>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/4D82CN5XB78H?utm_source%3Dandroid%26utm_medium%3Dcertificate%26utm_content%3Dcert_image%26utm_campaign%3Dsharing_cta%26utm_product%3Dcourse" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/4D82CN5XB78H?utm_source%3Dandroid%26utm_medium%3Dcertificate%26utm_content%3Dcert_image%26utm_campaign%3Dsharing_cta%26utm_product%3Dcourse" target="_blank" class="inline-block mt-3 text-orange-400 hover:text-orange-300">Verify &rarr;</a>
                 </div>
                 <div class="bg-slate-900 bg-opacity-50 p-6 rounded-xl border border-slate-800">
-                    <h4 class="text-lg font-semibold text-cyan-400">Google Digital Marketing Certificate</h4>
+                    <h4 class="text-lg font-semibold text-orange-400">Google Digital Marketing Certificate</h4>
                     <p class="text-slate-400">Google · Issued Sep 2022</p>
-                    <a href="https://i.ibb.co/1t89Z5NR/Google-digital-marketing-certificate.jpg" target="_blank" class="inline-block mt-3 text-cyan-400 hover:text-cyan-300">Verify &rarr;</a>
+                    <a href="https://i.ibb.co/1t89Z5NR/Google-digital-marketing-certificate.jpg" target="_blank" class="inline-block mt-3 text-orange-400 hover:text-orange-300">Verify &rarr;</a>
                 </div>
             </div>
         </section>
 
-        <!-- Volunteering Section is now integrated into Experience -->
-        <section id="volunteering" class="hidden"></section>
+        <!-- Volunteering Section -->
+        <section id="volunteering" class="py-20 reveal">
+            <h3 class="text-3xl font-bold mb-12">Volunteering</h3>
+            <div class="relative border-l-2 border-orange-400 pl-10">
+                <!-- BLITZKRIEG'23 -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">Organizer</h4>
+                    <p class="timeline-item-subtitle text-orange-400">BLITZ, The Computer Science Society , Keshav Mahavidyalaya</p>
+                    <p class="text-sm text-slate-400 mt-1">Mar 2023 · 1 mo</p>
+                    <p class="mt-2 text-slate-400">Organized BLITZ society's tech fest "BLITZKRIEG'23" (Science and Technology).</p>
+                </div>
+                <!-- Class Representative -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">Class Representative</h4>
+                    <p class="timeline-item-subtitle text-orange-400">Keshav Mahavidyalaya</p>
+                    <p class="text-sm text-slate-400 mt-1">Nov 2022 - Jul 2025 · 2 yrs 9 mos</p>
+                    <p class="mt-2 text-slate-400">B.Sc. (Honours) Computer Science</p>
+                </div>
+                <!-- Delhi University Centenary Celebrations -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">College Representative</h4>
+                    <p class="timeline-item-subtitle text-orange-400">Delhi University</p>
+                    <p class="text-sm text-slate-400 mt-1">Jun 2023 · 1 mo</p>
+                    <p class="mt-2 text-slate-400">DELHI UNIVERSITY CENTENARY CELEBRATIONS</p>
+                </div>
+                <!-- MyGov India -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">Campus Ambassador</h4>
+                    <p class="timeline-item-subtitle text-orange-400">MyGov India</p>
+                    <p class="text-sm text-slate-400 mt-1">Aug 2023 - Jul 2025 · 2 yrs</p>
+                    <p class="mt-2 text-slate-400">Campus Ambassador</p>
+                </div>
+                <!-- NEP SAARTHI -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">NEP SAARTHI</h4>
+                    <p class="timeline-item-subtitle text-orange-400">Keshav Mahavidyalaya - Delhi University</p>
+                    <p class="text-sm text-slate-400 mt-1">Sep 2024 - Present · 1 yr</p>
+                    <p class="mt-2 text-slate-400">NEP SAARTHI (National Education Policy - Student Ambassador for Academic Reforms in Transforming Higher Education in India)</p>
+                </div>
+                <!-- Session on AI / ML -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">Speaker</h4>
+                    <p class="timeline-item-subtitle text-orange-400">BLITZ, The Computer Science Society , Keshav Mahavidyalaya</p>
+                    <p class="text-sm text-slate-400 mt-1">Feb 2024 · 1 mo</p>
+                    <p class="mt-2 text-slate-400">Session on AI / ML (Artificial Intelligence, Machine Learning)</p>
+                </div>
+                <!-- Guide to Build an Effective CV/Resume -->
+                <div class="mb-10">
+                    <div class="absolute w-4 h-4 bg-white rounded-full -left-2 border-2 border-orange-400"></div>
+                    <h4 class="text-xl font-semibold text-white">Speaker</h4>
+                    <p class="timeline-item-subtitle text-orange-400">BLITZ, The Computer Science Society , Keshav Mahavidyalaya</p>
+                    <p class="text-sm text-slate-400 mt-1">Jan 2023 · 1 mo</p>
+                    <p class="mt-2 text-slate-400">Guide to Build an Effective CV/Resume</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Skills Section -->
         <section id="skills" class="py-20 reveal">
             <h3 class="text-3xl font-bold mb-8">Skills</h3>
             <div class="mb-10">
-                <h4 class="text-2xl font-semibold mb-4 text-cyan-300">Technical Skills</h4>
+                <h4 class="text-2xl font-semibold mb-4 text-green-400">Technical Skills</h4>
                 <div class="flex flex-wrap gap-3">
-                    <span class="skill-tag"><i class="fab fa-python skill-icon"></i> Python</span>
-                    <span class="skill-tag"><i class="fas fa-file-code skill-icon"></i> C++</span>
-                    <span class="skill-tag"><i class="fas fa-robot skill-icon"></i> Artificial Intelligence</span>
-                    <span class="skill-tag"><i class="fas fa-brain skill-icon"></i> Machine Learning</span>
-                    <span class="skill-tag"><i class="fas fa-chart-line skill-icon"></i> Data Analysis</span>
-                    <span class="skill-tag"><i class="fas fa-code skill-icon"></i> Full-stack Web Dev</span>
-                    <span class="skill-tag"><i class="fas fa-mobile-alt skill-icon"></i> App Development</span>
-                    <span class="skill-tag"><i class="fas fa-language skill-icon"></i> NLP</span>
-                    <span class="skill-tag"><i class="fab fa-google skill-icon"></i> SEO</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fab fa-python skill-icon"></i> Python</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-file-code skill-icon"></i> C++</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-robot skill-icon"></i> Artificial Intelligence</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-brain skill-icon"></i> Machine Learning</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-chart-line skill-icon"></i> Data Analysis</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-code skill-icon"></i> Full-stack Web Dev</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-mobile-alt skill-icon"></i> App Development</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fas fa-language skill-icon"></i> NLP</span>
+                    <span class="skill-tag" style="background-color: rgba(76, 209, 55, 0.1); border-color: rgba(76, 209, 55, 0.3); color: #4ade80;"><i class="fab fa-google skill-icon"></i> SEO</span>
                 </div>
             </div>
             <div>
-                <h4 class="text-2xl font-semibold mb-4 text-cyan-300">Soft Skills</h4>
+                <h4 class="text-2xl font-semibold mb-4 text-orange-400">Soft Skills</h4>
                  <div class="flex flex-wrap gap-3">
-                    <span class="skill-tag"><i class="fas fa-users skill-icon"></i> Leadership</span>
-                    <span class="skill-tag"><i class="fas fa-tasks skill-icon"></i> Team Management</span>
-                    <span class="skill-tag"><i class="fas fa-comments skill-icon"></i> Communication</span>
-                    <span class="skill-tag"><i class="fas fa-lightbulb skill-icon"></i> Problem Solving</span>
-                    <span class="skill-tag"><i class="fas fa-check-double skill-icon"></i> Critical Thinking</span>
-                    <span class="skill-tag"><i class="fas fa-microphone-alt skill-icon"></i> Public Speaking</span>
-                    <span class="skill-tag"><i class="fas fa-pencil-alt skill-icon"></i> Creative Writing</span>
-                    <span class="skill-tag"><i class="fas fa-calendar-check skill-icon"></i> Event Management</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-users skill-icon"></i> Leadership</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-tasks skill-icon"></i> Team Management</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-comments skill-icon"></i> Communication</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-lightbulb skill-icon"></i> Problem Solving</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-check-double skill-icon"></i> Critical Thinking</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-microphone-alt skill-icon"></i> Public Speaking</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-pencil-alt skill-icon"></i> Creative Writing</span>
+                    <span class="skill-tag" style="background-color: rgba(251, 146, 60, 0.1); border-color: rgba(251, 146, 60, 0.3); color: #fb923c;"><i class="fas fa-calendar-check skill-icon"></i> Event Management</span>
                 </div>
             </div>
         </section>
